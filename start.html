@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL PUZZLE - Start</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="rect-box">
+            <div class="header">
+                <span>DIGITAL PUZZLE</span>
+            </div>
+            <form class="main-box" id="startForm">
+                <button type="submit">START</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+    <script>
+    // Block back navigation on start page
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.pushState(null, null, location.href);
+        alert("You cannot go back from the start page!");
+    };
+    </script>
+</body>
+</html>

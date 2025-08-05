@@ -1,0 +1,199 @@
+.ref-img img {
+
+    object-fit: contain;
+    width: 100%;
+}
+.level-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 40px;
+}
+.ref-img {
+    max-width: 300px;
+    border: 1px solid #39ff14;
+    background: #111;
+    border-radius: 8px;
+    box-shadow: 0 0 16px #39ff1440;
+    padding: 10px;
+    height: 80%;
+    margin-top: 10px;
+}
+.rules-box {
+    border: 1px solid #39ff14;
+    background: rgba(0,0,0,0.8);
+    color: #39ff14;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 30px 30px;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 400px;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    box-shadow: 0 0 16px #39ff1440;
+    height: 80%;
+    margin-top: 10px;
+}
+.level-rect {
+    border: 2px solid #39ff14;
+    background: rgba(0,0,0,0.85);
+    padding: 40px 40px 40px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 24px #39ff1460;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80vw;
+    height: 80vh;
+    min-width: 320px;
+    min-height: 320px;
+    max-width: 95vw;
+    max-height: 95vh;
+    margin: auto;
+}
+.level-header {
+    border-bottom: 1px solid #39ff14;
+    border-radius: 0;
+    margin-bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 2.2rem;
+    letter-spacing: 0.15em;
+    padding: 20px 0 18px 0;
+}
+.question-area {
+    margin: 40px 0 20px 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+}
+.answer-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+.answer-form input[type="text"] {
+    background: #000;
+    color: #39ff14;
+    border: 1px solid #39ff14;
+    padding: 10px;
+    font-size: 1.1rem;
+    width: 220px;
+    margin-bottom: 18px;
+    outline: none;
+}
+.answer-form button {
+    background: #000;
+    color: #39ff14;
+    border: 1px solid #39ff14;
+    padding: 10px 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.answer-form button:hover {
+    background: #39ff14;
+    color: #000;
+}
+.feedback {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #ff4444;
+    min-height: 24px;
+}
+.rect-box {
+    border: 2px solid #39ff14;
+    background: rgba(0,0,0,0.85);
+    padding: 40px 40px 40px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 24px #39ff1460;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80vw;
+    height: 80vh;
+    min-width: 320px;
+    min-height: 320px;
+    max-width: 95vw;
+    max-height: 95vh;
+    margin: auto;
+}
+.rect-box .header {
+    border-bottom: 1px solid #39ff14;
+    border-radius: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+.rect-box .main-box {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    min-width: 0;
+    margin-top: 20px;
+}
+body {
+    background: #000;
+    color: #39ff14;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    height: 100vh;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.header {
+    border: 1px solid #39ff14;
+    width: 100vw;
+    text-align: center;
+    padding: 30px 0 20px 0;
+    font-size: 2.5rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 40px;
+    background: rgba(0,0,0,0.8);
+}
+.main-box {
+    border: 1px solid #39ff14;
+    padding: 40px 30px 30px 30px;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+}
+.main-box label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.main-box input[type="text"] {
+    background: #000;
+    color: #39ff14;
+    border: 1px solid #39ff14;
+    padding: 10px;
+    font-size: 1.1rem;
+    width: 220px;
+    margin-bottom: 25px;
+    outline: none;
+}
+.main-box button {
+    background: #000;
+    color: #39ff14;
+    border: 1px solid #39ff14;
+    padding: 10px 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.main-box button:hover {
+    background: #39ff14;
+    color: #000;
+}

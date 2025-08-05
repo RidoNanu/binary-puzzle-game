@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL PUZZLE - Level 1</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="level-rect">
+            <div class="level-header">
+                <span>LEVEL 1</span>
+                <span class="timer" id="timer" style="float:right; font-size:1.1rem; letter-spacing:0.08em;"></span>
+            </div>
+            <div class="level-layout">
+                <img src="assets/image.png" alt="Reference Table" class="ref-img">
+                <div class="rules-box">
+                    <b>Rules:</b><br><br>
+                    Each set of 8 bits (binary) represents one uppercase letter.<br><br>
+                    Use the ASCII–binary table to decode.<br><br>
+                    Answers are random uppercase sequences without spaces or real words.<br><br>
+                    <b>Example:</b><br>
+                    Binary Code: 01001000 01000101 01001100 01001100 01001111<br>
+                    Decoded Letters: H E L L O<br>
+                    Answer: HELLO
+                </div>
+                <div class="game-box">
+                    <div class="question-area" id="questionArea">Loading...</div>
+                    <form class="answer-form" id="answerForm">
+                        <input type="text" id="answerInput" placeholder="Enter answer" autocomplete="off" required>
+                        <button type="submit">SUBMIT</button>
+                        <div class="feedback" id="feedback"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/level1.js"></script>
+</body>
+</html>

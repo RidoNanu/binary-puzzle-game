@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL PUZZLE - Finish</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/finish.js"></script>
+    <script>
+    // Block back navigation (redundant, in case finish.js fails to load)
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.pushState(null, null, location.href);
+        alert("You cannot go back during the game!");
+    };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="rect-box">
+            <div class="header">
+                <span>DIGITAL PUZZLE</span>
+            </div>
+            <div class="main-box" style="text-align:center;">
+                <h2 style="color:#39ff14; font-size:2rem; margin-bottom:20px;">Congratulations!</h2>
+                <p style="font-size:1.3rem; color:#39ff14;">You did it!</p>
+                <button type="submit" onclick="redirectToIndex()">Let's Go!</button>
+                <script>
+                    function redirectToIndex() {
+                        window.location.href = 'index.html';
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

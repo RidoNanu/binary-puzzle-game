@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAL PUZZLE - Level 2</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="level-rect">
+            <div class="level-header">
+                <span>LEVEL 2</span>
+                <span class="timer" id="timer" style="float:right; font-size:1.1rem; letter-spacing:0.08em;"></span>
+            </div>
+            <div class="level-layout">
+                <img src="assets/image.png" alt="Reference Table" class="ref-img">
+                <div class="rules-box">
+                    <b>Rules:</b><br><br>
+                    Reverse each 8-bit group before decoding with the ASCII–binary table.<br><br>
+                    Answers are random uppercase sequences, no spaces.<br><br>
+                    <b>Example:</b><br>
+                    Binary Code: 00010001 00100101 01001101 10010100 01001100<br>
+                    Reversed: 10001000 10100100 10110010 00101001 00110010<br>
+                    Decoded: Q H M P Z<br>
+                    Answer: QHMPZ
+                </div>
+                <div class="game-box">
+                    <div class="question-area" id="questionArea">Loading...</div>
+                    <form class="answer-form" id="answerForm">
+                        <input type="text" id="answerInput" placeholder="Enter answer" autocomplete="off" required>
+                        <button type="submit">SUBMIT</button>
+                        <div class="feedback" id="feedback"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/level2.js"></script>
+</body>
+</html>
