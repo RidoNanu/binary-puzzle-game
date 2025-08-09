@@ -1,16 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Block back navigation
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.pushState(null, null, location.href);
-        alert("You cannot go back during the game!");
-    };
+    // Initialize navigation prevention
+    initNavigationPrevention();
+    
+    // Get DOM elements
+    const questionArea = document.getElementById('questionArea');
+    const answerForm = document.getElementById('answerForm');
+    const answerInput = document.getElementById('answerInput');
+    const feedback = document.getElementById('feedback');
+
     // Resize ref image to match rules container height
     const refImg = document.querySelector('.ref-img');
     const rulesBox = document.querySelector('.rules-box');
     if (refImg && rulesBox) {
         refImg.style.height = `${rulesBox.offsetHeight}px`;
     }
+
     // Timer logic
     let timerInterval;
     let seconds = parseInt(localStorage.getItem('timer_seconds')) || 0;
@@ -20,21 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const timerEl = document.getElementById('timer');
         if (timerEl) {
             timerEl.textContent = `Time: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timerEl.style.display = 'inline-block';
         }
     }
 
     function startTimer() {
+        const startTime = Date.now() - (seconds * 1000) - (minutes * 60000);
         timerInterval = setInterval(() => {
-            if (minutes === 15 && seconds === 0) {
+            const elapsedTime = Date.now() - startTime;
+            seconds = Math.floor((elapsedTime / 1000) % 60);
+            minutes = Math.floor((elapsedTime / 1000) / 60);
+            
+            if (minutes === 15) {
                 clearInterval(timerInterval);
-                updateTimerDisplay();
+                alert('Time is up! Game Over');
+                window.location.href = 'index.html';
                 return;
             }
-            seconds++;
-            if (seconds === 60) {
-                minutes++;
-                seconds = 0;
-            }
+            
             localStorage.setItem('timer_seconds', seconds);
             localStorage.setItem('timer_minutes', minutes);
             updateTimerDisplay();
@@ -43,39 +50,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateTimerDisplay();
     startTimer();
-    // Variable declarations
-    let questions = [];
-    let currentIdx = -1;
-    let currentAnswer = '';
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * max);
-    }
+    // Game logic
+    let currentQuestion = null;
 
-    function loadQuestion() {
-        if (!questions.length) return;
-        currentIdx = getRandomInt(questions.length);
-        const q = questions[currentIdx];
-        document.getElementById('questionArea').textContent = q.question;
-        currentAnswer = q.answer;
-        document.getElementById('answerInput').value = '';
-        document.getElementById('feedback').textContent = '';
-    }
-
+    // Fetch and display question
     fetch('data/level2.json')
-        .then(res => res.json())
-        .then(data => {
-            questions = data;
-            loadQuestion();
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to load questions');
+            }
+            return response.json();
+        })
+        .then(questions => {
+            if (!questions || !questions.length) {
+                throw new Error('No questions available');
+            }
+            // Select random question
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+            // Display question
+            questionArea.textContent = currentQuestion.question;
+        })
+        .catch(error => {
+            console.error('Error loading question:', error);
+            questionArea.textContent = 'Error loading question. Please refresh the page.';
         });
 
-    document.getElementById('answerForm').addEventListener('submit', function(e) {
+    // Handle form submission
+    answerForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const userAns = document.getElementById('answerInput').value.trim().toUpperCase();
-        if (userAns === currentAnswer) {
-            window.location.href = 'level3.html';
+        
+        if (!currentQuestion) {
+            feedback.textContent = 'Please wait for question to load...';
+            return;
+        }
+
+        const userAnswer = answerInput.value.trim().toUpperCase();
+        
+        if (userAnswer === currentQuestion.answer) {
+            feedback.textContent = 'Correct! Moving to next level...';
+            feedback.className = 'feedback success';
+            
+            // Store level completion and time
+            localStorage.setItem('level2Complete', 'true');
+            clearInterval(timerInterval);
+            const totalSeconds = minutes * 60 + seconds;
+            localStorage.setItem('level2_time', totalSeconds);
+            
+            // Redirect after showing success
+            setTimeout(() => {
+                window.location.href = 'level3.html';
+            }, 2000);
         } else {
-            alert('oops! wrong answer try again');
+            feedback.textContent = 'Wrong answer, try again!';
+            feedback.className = 'feedback error';
+            answerInput.value = '';
+            answerInput.focus();
         }
     });
 });

@@ -1,16 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Block back navigation
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.pushState(null, null, location.href);
-        alert("You cannot go back during the game!");
-    };
+    // Initialize navigation prevention
+    initNavigationPrevention();
+    
+    // Get DOM elements
+    const questionArea = document.getElementById('questionArea');
+    const answerForm = document.getElementById('answerForm');
+    const answerInput = document.getElementById('answerInput');
+    const feedback = document.getElementById('feedback');
+
     // Resize ref image to match rules container height
     const refImg = document.querySelector('.ref-img');
     const rulesBox = document.querySelector('.rules-box');
     if (refImg && rulesBox) {
         refImg.style.height = `${rulesBox.offsetHeight}px`;
     }
+
     // Timer logic
     let timerInterval;
     let seconds = parseInt(localStorage.getItem('timer_seconds')) || 0;
@@ -24,23 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
+        const startTime = Date.now() - (seconds * 1000) - (minutes * 60000);
         timerInterval = setInterval(() => {
-            if (minutes === 15 && seconds === 0) {
-// Block back navigation (run immediately)
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.pushState(null, null, location.href);
-    alert("You cannot go back during the game!");
-};
+            const elapsedTime = Date.now() - startTime;
+            seconds = Math.floor((elapsedTime / 1000) % 60);
+            minutes = Math.floor((elapsedTime / 1000) / 60);
+            
+            if (minutes === 15) {
                 clearInterval(timerInterval);
                 updateTimerDisplay();
                 return;
             }
-            seconds++;
-            if (seconds === 60) {
-                minutes++;
-                seconds = 0;
-            }
+            
             localStorage.setItem('timer_seconds', seconds);
             localStorage.setItem('timer_minutes', minutes);
             updateTimerDisplay();
@@ -78,22 +77,48 @@ window.onpopstate = function () {
     }
 
     fetch('data/level1.json')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Failed to load questions');
+            }
+            return res.json();
+        })
         .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                throw new Error('Invalid question data');
+            }
             questions = data;
             loadQuestion();
+        })
+        .catch(error => {
+            console.error('Error loading questions:', error);
+            document.getElementById('questionArea').textContent = 'Error loading questions. Please refresh the page.';
         });
 
     document.getElementById('answerForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const userAns = document.getElementById('answerInput').value.trim().toUpperCase();
+        const feedback = document.getElementById('feedback');
+        
         if (userAns === currentAnswer) {
-            window.location.href = 'level2.html';
+            feedback.textContent = 'Correct! Moving to next level...';
+            feedback.className = 'feedback success';
+            clearInterval(timerInterval);
+            const totalSeconds = minutes * 60 + seconds;
+            localStorage.setItem('level1_time', totalSeconds);
+            
+            // Redirect after showing success message
+            setTimeout(() => {
+                window.location.href = 'level2.html';
+            }, 2000);
         } else {
-            alert('oops! wrong answer try again');
+            feedback.textContent = 'Wrong answer. Please try again!';
+            feedback.className = 'feedback error';
+            document.getElementById('answerInput').value = '';
+            document.getElementById('answerInput').focus();
         }
     });
 });
 
-// Optionally, allow Enter to submit
+
 
