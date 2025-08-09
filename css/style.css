@@ -602,6 +602,122 @@ body {
     100% { background-position: 200% 0; }
 }
 
+@keyframes blink-text {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Retro Elements */
+.retro-text {
+    color: var(--mario-yellow);
+    font-size: 1.5em;
+    text-shadow: 3px 3px 0 var(--mario-black);
+    margin: 20px 0;
+}
+
+.retro-text.blink {
+    animation: blink-text 1s infinite;
+}
+
+.pixel-coins {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.pixel-coin {
+    width: 40px;
+    height: 40px;
+    background: var(--mario-yellow);
+    border: 3px solid var(--mario-white);
+    border-radius: 50%;
+    position: relative;
+    animation: float 1.5s infinite ease-in-out;
+    box-shadow: 0 0 10px rgba(251, 208, 0, 0.5);
+}
+
+.pixel-coin:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.pixel-coin:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.pixel-star {
+    width: 30px;
+    height: 30px;
+    background: var(--mario-yellow);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    position: absolute;
+    animation: rotate 3s linear infinite;
+}
+
+.pixel-star.left {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.pixel-star.right {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mushroom {
+    width: 40px;
+    height: 40px;
+    background: var(--mario-red);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 20px;
+    box-shadow: 0 4px 0 var(--mario-brown);
+}
+
+.mushroom::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -5px;
+    width: 50px;
+    height: 30px;
+    background: var(--mario-red);
+    border-radius: 25px 25px 0 0;
+    border: 3px solid var(--mario-white);
+    border-bottom: none;
+}
+
+.mushroom.left {
+    left: 20px;
+}
+
+.mushroom.right {
+    right: 20px;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.02) 50%,
+        rgba(0, 0, 0, 0.02) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 999;
+}
+
 .ref-img {
     flex: 0 1 45%;
     min-width: 500px;
