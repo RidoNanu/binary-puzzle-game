@@ -259,6 +259,7 @@ body {
         max-width: 100%;
         padding: 20px;
         font-size: 1rem;
+        box-sizing: border-box;
     }
     
     .question-area {
@@ -549,7 +550,7 @@ body {
 @media (max-width: 768px) {
     .rect-box {
         padding: 20px;
-        width: 95%;
+        width: 80%;
     }
 }
 .rect-box .header {
