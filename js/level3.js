@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize navigation prevention
     initNavigationPrevention();
+    // Reset timer for this level
+    localStorage.setItem('timer_seconds', '0');
+    localStorage.setItem('timer_minutes', '0');
+    localStorage.removeItem('timer_started');
     
     // Get DOM elements
     const questionArea = document.getElementById('questionArea');
@@ -90,19 +94,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userAnswer === currentQuestion.answer) {
             feedback.textContent = 'Correct! You finished Level 3!';
             feedback.className = 'feedback success';
-            
             // Store level completion and time
             clearInterval(timerInterval);
             const totalSeconds = minutes * 60 + seconds;
-            localStorage.setItem('level3_time', totalSeconds);
-            
+            const level3Start = parseInt(localStorage.getItem('level3_start_time') || '0');
+            const level3Actual = totalSeconds - level3Start;
+            localStorage.setItem('level3_time', level3Actual);
             // Calculate total time
             const level1Time = parseFloat(localStorage.getItem('level1_time') || 0);
             const level2Time = parseFloat(localStorage.getItem('level2_time') || 0);
-            const level3Time = totalSeconds;
+            const level3Time = level3Actual;
             const totalTime = level1Time + level2Time + level3Time;
             localStorage.setItem('total_time', totalTime);
-            
             // Redirect after showing success
             setTimeout(() => {
                 window.location.href = 'finish.html';

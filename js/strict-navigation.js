@@ -26,6 +26,6 @@ function initNavigationPrevention() {
 function isInputFocused() {
     const activeElement = document.activeElement;
     return activeElement.tagName === 'INPUT' || 
-           activeElement.tagName === 'TEXTAREA' || 
-           activeElement.isContentEditable;
+        activeElement.tagName === 'TEXTAREA' || 
+        activeElement.isContentEditable;
 }

@@ -575,6 +575,11 @@ body {
     --mario-brown: #985f33;
     --mario-black: #000000;
     --mario-white: #ffffff;
+    --retro-input-bg: #222;
+    --retro-input-border: #fbd000;
+    --retro-input-focus: #4a90e2;
+    --retro-label-bg: #e52521;
+    --retro-label-color: #fff;
 }
 
 /* Disable text selection */
@@ -597,6 +602,56 @@ body {
     50% { box-shadow: 0 0 20px var(--mario-yellow); }
     100% { box-shadow: 0 0 5px var(--mario-yellow); }
 }
+
+/* Retro Form Styling */
+.retro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin: 30px 0 10px 0;
+    align-items: center;
+}
+.retro-form label.retro-text {
+    background: var(--retro-label-bg);
+    color: var(--retro-label-color);
+    padding: 6px 18px;
+    border-radius: 6px;
+    font-size: 1em;
+    margin-bottom: 6px;
+    box-shadow: 0 2px 0 var(--mario-brown);
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 var(--mario-black);
+    border: 2px solid var(--mario-yellow);
+}
+.retro-input {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    background: var(--retro-input-bg);
+    color: var(--mario-yellow);
+    border: 3px solid var(--retro-input-border);
+    border-radius: 6px;
+    padding: 10px 5px;
+    outline: none;
+    box-shadow: 0 2px 0 var(--mario-brown);
+    margin-bottom: 8px;
+    width: 300px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.retro-input:focus {
+    border-color: var(--retro-input-focus);
+    box-shadow: 0 0 8px var(--retro-input-focus);
+    background: #333;
+}
+.retro-input::placeholder {
+    color: #888;
+    opacity: 1;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
 
 @keyframes shine {
     0% { background-position: -200% 0; }

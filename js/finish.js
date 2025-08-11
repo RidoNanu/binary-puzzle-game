@@ -14,6 +14,14 @@ window.addEventListener('DOMContentLoaded', function() {
         alert("You cannot go back during the game!");
     };
 
+    // Get user details from localStorage
+    const userName = localStorage.getItem('user_name') || '--';
+    const userRegno = localStorage.getItem('user_regno') || '--';
+    const userPhone = localStorage.getItem('user_phone') || '--';
+    if (document.getElementById('userName')) document.getElementById('userName').textContent = userName;
+    if (document.getElementById('userRegno')) document.getElementById('userRegno').textContent = userRegno;
+    if (document.getElementById('userPhone')) document.getElementById('userPhone').textContent = userPhone;
+
     // Get times from localStorage
     const level1Time = parseFloat(localStorage.getItem('level1_time') || 0);
     const level2Time = parseFloat(localStorage.getItem('level2_time') || 0);

@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize navigation prevention
     initNavigationPrevention();
+    // Reset timer for this level
+    localStorage.setItem('timer_seconds', '0');
+    localStorage.setItem('timer_minutes', '0');
+    localStorage.removeItem('timer_started');
     
     // Get DOM elements
     const questionArea = document.getElementById('questionArea');
@@ -90,15 +94,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userAnswer === currentQuestion.answer) {
             feedback.textContent = 'Correct! Moving to next level...';
             feedback.className = 'feedback success';
-            
             // Store level completion and time
             localStorage.setItem('level2Complete', 'true');
             clearInterval(timerInterval);
             const totalSeconds = minutes * 60 + seconds;
-            localStorage.setItem('level2_time', totalSeconds);
-            
+            const level2Start = parseInt(localStorage.getItem('level2_start_time') || '0');
+            const level2Actual = totalSeconds - level2Start;
+            localStorage.setItem('level2_time', level2Actual);
             // Redirect after showing success
             setTimeout(() => {
+                localStorage.setItem('level3_start_time', totalSeconds); // Store cumulative time for next level
                 window.location.href = 'level3.html';
             }, 2000);
         } else {

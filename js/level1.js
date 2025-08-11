@@ -99,16 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const userAns = document.getElementById('answerInput').value.trim().toUpperCase();
         const feedback = document.getElementById('feedback');
-        
         if (userAns === currentAnswer) {
             feedback.textContent = 'Correct! Moving to next level...';
             feedback.className = 'feedback success';
             clearInterval(timerInterval);
+            // Store time spent only on this level
             const totalSeconds = minutes * 60 + seconds;
+            localStorage.setItem('level1_start_time', '0'); // Always 0 for level 1
             localStorage.setItem('level1_time', totalSeconds);
-            
             // Redirect after showing success message
             setTimeout(() => {
+                localStorage.setItem('level2_start_time', totalSeconds); // Store cumulative time for next level
                 window.location.href = 'level2.html';
             }, 2000);
         } else {
