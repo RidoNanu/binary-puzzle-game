@@ -39,14 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const elapsedTime = Date.now() - startTime;
             seconds = Math.floor((elapsedTime / 1000) % 60);
             minutes = Math.floor((elapsedTime / 1000) / 60);
-            
-            if (minutes === 15) {
+            if (minutes === 10) {
                 clearInterval(timerInterval);
-                alert('Time is up! Game Over');
-                window.location.href = 'index.html';
+                alert('Maximum time reached for Level 3!');
+                setTimeout(() => {
+                    window.location.href = 'finish.html';
+                }, 500);
                 return;
             }
-            
             localStorage.setItem('timer_seconds', seconds);
             localStorage.setItem('timer_minutes', minutes);
             updateTimerDisplay();
