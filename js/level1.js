@@ -1,20 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize navigation prevention
     initNavigationPrevention();
-    
+    // Set start timestamp for level 1
+    localStorage.setItem('level1_start_timestamp', Date.now().toString());
     // Get DOM elements
     const questionArea = document.getElementById('questionArea');
     const answerForm = document.getElementById('answerForm');
     const answerInput = document.getElementById('answerInput');
     const feedback = document.getElementById('feedback');
-
     // Resize ref image to match rules container height
     const refImg = document.querySelector('.ref-img');
     const rulesBox = document.querySelector('.rules-box');
     if (refImg && rulesBox) {
         refImg.style.height = `${rulesBox.offsetHeight}px`;
     }
-
     // Timer logic
     let timerInterval;
     let seconds = parseInt(localStorage.getItem('timer_seconds')) || 0;
@@ -103,13 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
             feedback.textContent = 'Correct! Moving to next level...';
             feedback.className = 'feedback success';
             clearInterval(timerInterval);
-            // Store time spent only on this level
-            const totalSeconds = minutes * 60 + seconds;
-            localStorage.setItem('level1_start_time', '0'); // Always 0 for level 1
-            localStorage.setItem('level1_time', totalSeconds);
+            // Store time spent only on this level using timestamp
+            const startTimestamp = parseInt(localStorage.getItem('level1_start_timestamp') || '0');
+            const endTimestamp = Date.now();
+            let level1Actual = Math.round((endTimestamp - startTimestamp) / 1000);
+            if (level1Actual < 0) level1Actual = 0;
+            localStorage.setItem('level1_time', level1Actual);
             // Redirect after showing success message
             setTimeout(() => {
-                localStorage.setItem('level2_start_time', totalSeconds); // Store cumulative time for next level
+                localStorage.setItem('level2_start_timestamp', Date.now().toString());
                 window.location.href = 'level2.html';
             }, 2000);
         } else {

@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize navigation prevention
     initNavigationPrevention();
-    // Reset timer for this level
+    // Reset timer for this level and set start timestamp
     localStorage.setItem('timer_seconds', '0');
     localStorage.setItem('timer_minutes', '0');
+    localStorage.setItem('level3_start_timestamp', Date.now().toString());
     localStorage.removeItem('timer_started');
     
     // Get DOM elements
@@ -96,9 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
             feedback.className = 'feedback success';
             // Store level completion and time
             clearInterval(timerInterval);
-            const totalSeconds = minutes * 60 + seconds;
-            const level3Start = parseInt(localStorage.getItem('level3_start_time') || '0');
-            const level3Actual = totalSeconds - level3Start;
+            let level3Actual = 0;
+            const startTimestamp = parseInt(localStorage.getItem('level3_start_timestamp') || '0');
+            if (startTimestamp > 0) {
+                const endTimestamp = Date.now();
+                level3Actual = Math.round((endTimestamp - startTimestamp) / 1000);
+            } else {
+                // fallback to timer if timestamp missing
+                level3Actual = minutes * 60 + seconds;
+            }
+            if (level3Actual < 0) level3Actual = 0;
             localStorage.setItem('level3_time', level3Actual);
             // Calculate total time
             const level1Time = parseFloat(localStorage.getItem('level1_time') || 0);

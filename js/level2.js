@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize navigation prevention
     initNavigationPrevention();
-    // Reset timer for this level
+    // Reset timer for this level and set start timestamp only if not already set
     localStorage.setItem('timer_seconds', '0');
     localStorage.setItem('timer_minutes', '0');
+    if (!localStorage.getItem('level2_start_timestamp')) {
+        localStorage.setItem('level2_start_timestamp', Date.now().toString());
+    }
     localStorage.removeItem('timer_started');
     
     // Get DOM elements
@@ -97,13 +100,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Store level completion and time
             localStorage.setItem('level2Complete', 'true');
             clearInterval(timerInterval);
-            const totalSeconds = minutes * 60 + seconds;
-            const level2Start = parseInt(localStorage.getItem('level2_start_time') || '0');
-            const level2Actual = totalSeconds - level2Start;
+            let level2Actual = 0;
+            const startTimestamp = parseInt(localStorage.getItem('level2_start_timestamp') || '0');
+            if (startTimestamp > 0) {
+                const endTimestamp = Date.now();
+                level2Actual = Math.round((endTimestamp - startTimestamp) / 1000);
+                if (isNaN(level2Actual) || level2Actual < 0) level2Actual = 0;
+            } else {
+                // fallback to timer if timestamp missing
+                level2Actual = minutes * 60 + seconds;
+                if (isNaN(level2Actual) || level2Actual < 0) level2Actual = 0;
+            }
+            if (level2Actual < 0) level2Actual = 0;
             localStorage.setItem('level2_time', level2Actual);
             // Redirect after showing success
             setTimeout(() => {
-                localStorage.setItem('level3_start_time', totalSeconds); // Store cumulative time for next level
+                localStorage.setItem('level3_start_timestamp', Date.now().toString()); // Store timestamp for next level
                 window.location.href = 'level3.html';
             }, 2000);
         } else {
